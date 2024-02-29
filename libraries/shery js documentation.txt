@@ -1,0 +1,161 @@
+Mouse Follower
+The feature creates smooth mouse follower, creating an engaging user experience.
+
+Shery.mouseFollower({
+  //Parameters are optional.
+  skew: true,
+  ease: "cubic-bezier(0.23, 1, 0.320, 1)",
+  duration: 1,
+});
+
+Mask Zoomer
+The mask zoomer effect enables zooming into an image on mouse hover with a smooth mask transition, directing the user's focus to the targeted content.
+
+Shery.imageMasker(".mask-target" /* Element to target.*/, {
+  //Parameters are optional.
+  mouseFollower: true,
+  text: "Shery",
+  ease: "cubic-bezier(0.23, 1, 0.320, 1)",
+  duration: 1,
+});
+
+Make Magnet
+The magnet mouse attractor effect draws elements towards the cursor, as if they are magnetically attracted, offering a unique and interactive experience.
+
+Shery.makeMagnet(".magnet-target" /* Element to target.*/, {
+  //Parameters are optional.
+  ease: "cubic-bezier(0.23, 1, 0.320, 1)",
+  duration: 1,
+});
+
+Text Animate
+The text animate effect animates text with cool animation , with many preset animation, offering a unique experience.
+
+Shery.textAnimate(".text-target" /* Element to target.*/, {
+  //Parameters are optional.
+  style: 1,
+  y: 10,
+  delay: 0.1,
+  duration: 2,
+  ease: "cubic-bezier(0.23, 1, 0.320, 1)",
+  multiplier: 0.1,
+});
+
+Hover With Media Circle
+The hover with media circle effect creates a circular media element (image or video) which follows the cursor's movement when hovering over specified elements with blending effect. This effect provides an engaging way to showcase media content associated with the hovered elements.
+
+Shery.hoverWithMediaCircle(".hover-target" /* Element to target.*/, {
+  images: ["image1.jpg", "image2.jpg", "image3.jpg"] /*OR*/,
+  //videos: ["video1.mp4", "video2.mp4"],
+});
+
+3D Image Effects
+These are effects are implemented with the help of Three.js to offer a unique experience with single function.
+
+<img class="img" src="example.img" />//Must provide a class to image.
+Shery.imageEffect(".img", {
+  style: 2, //Select Style
+  debug: true, // Debug Panel
+  config: {
+    /* Config made from debug panel */
+  },
+  preset: "./presets/wigglewobble.json",
+});
+
+
+Multiple Image Scroll Effect
+All 3D effects in this library supports multi image with wave scroll effect which increases the productivity and usability of effect, offering a unique and interactive experience.
+
+To use this you just need to give a div with images you want.
+
+<div class="images">
+  <img src="image1" />
+  <img src="image2" />
+  <img src="image3" />
+</div>
+Shery.imageEffect(".images", {
+  style: 3,
+  /*optional parameters
+  these parameter dose not applies to custom scroll trigger callback */
+  scrollSnapping: true,
+  scrollSpeed: 6,
+  touchSpeed: 6,
+  damping: 7,
+});
+
+Custom Scroll Trigger Callback
+To implement the GSAP ScrollTrigger or any other scroll library, as well as vanilla JavaScript and to achieve them full potential of Multiple Image Scroll Effect, you can define your custom scroll behavior using the callback parameter slideStyle within the Multiple Image Scroll Effect.
+
+To define your specific scroll behavior, utilize the slideStyle callback in the following manner: slideStyle: (setScroll) => {}. This empowers you to establish your own scrolling conditions using the setScroll() function within the callback. To successfully implement this approach, adhere to the following steps:
+
+Enable the slideStyle option for your chosen visual style effect.
+Invoke the callback, passing in the setScroll parameter.
+Within the callback function, you can dynamically update the scroll position, ranging from 0 to the position of the last image.
+Employ a scroll event listener within this context to keep track of changes in the scrolling behavior. You can select any suitable method, such as GSAP or other libraries.
+Inside the event listener, utilize the setScroll function and provide the parameter window.scrollY / innerHeight to obtain the current scroll position relative to the window height. You can customize this calculation as needed, possibly integrating the progress from GSAP or similar methods.
+By following these steps, you will successfully implement your own personalized scroll-triggering mechanism.
+<!-- Here is the code snippet demonstrating this process: -->
+
+<div class="images">
+  <img src="image1" />
+  <img src="image2" />
+  <img src="image3" />
+</div>
+Shery.imageEffect(".images", {
+  style: 5,
+  slideStyle: (setScroll) => {
+    window.addEventListener("scroll", () => {
+      setScroll(window.scrollY / innerHeight); //Updating the scroll
+    });
+  },
+});
+By adhering to these instructions, you can create and control your unique scroll-triggered effects in the Multiple Image Scroll Effect using the specified callback mechanism.
+
+Dynamic Gooey Effect
+This is very dynamic gooey effect can be applied to any of the above effect with a single param gooey:true and can be tweaked in debug mode.
+
+<div class="images">
+  <img src="front_image" />
+  <img src="gooey_image" />
+</div>
+Shery.imageEffect(".images", {
+  style: 6,
+  debug: true,
+  gooey: true,
+});
+
+
+Callback Usage
+Create your own animation or condition for change values of uniforms, meshes, camera, etc where uniform are variable which you change from debug panel you can use this by option setUniforms: (uniforms) => {} you can console log the uniforms to get list of uniforms and for other attributes you can use option setAttribute: (attributes) => {} the variable attributes is an object which contains :-
+
+ {
+   // Geometry of effect
+    geometry,
+
+    // 3js Scene
+    scene, 
+
+    // 3js Camera
+    camera, 
+
+    // WebGL Renderer
+    renderer, 
+
+    // Array of uniforms of all elements of given class
+    uniforms: [],
+     
+    // Array of meshes of all elements of given class
+    meshes: []  
+  }
+Shery.imageEffect('img', {
+    style: 2,
+    setUniforms: (uniforms) => {
+       uniforms.maskVal.value = 3 // Syntax -> uniforms.uniform_name.value = your
+    }
+})
+Shery.imageEffect('img', {
+    style: 2,
+    setAttribute: (attributes) => {
+       uniforms[0].maskVal.value = 3 
+    }
+})
